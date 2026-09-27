@@ -196,11 +196,15 @@ app.post('/api/v1/admin/keys/:id/reset', requireAdmin, async (req, res) => {
 // ---------------------------------------------------------------- health
 
 app.get('/healthz', async (req, res) => {
+  const signing = signingReady();
+  if (!db.databaseConfigured()) {
+    return res.status(503).json({ ok: false, signing, database: 'DATABASE_URL is not set' });
+  }
   try {
     await db.pool.query('SELECT 1');
-    return res.json({ ok: true, signing: signingReady() });
-  } catch {
-    return res.status(503).json({ ok: false, signing: signingReady() });
+    return res.json({ ok: true, signing, database: 'connected' });
+  } catch (error) {
+    return res.status(503).json({ ok: false, signing, database: error.code ?? 'unreachable' });
   }
 });
 
@@ -218,6 +222,9 @@ db.migrate()
     app.listen(port, () => console.log(`Astra licensing listening on ${port}`));
   })
   .catch((error) => {
-    console.error('Database migration failed', error);
+    console.error('');
+    console.error('  Astra licensing could not start:');
+    console.error('  ' + error.message);
+    console.error('');
     process.exit(1);
   });

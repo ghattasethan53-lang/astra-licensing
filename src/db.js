@@ -11,6 +11,14 @@ const { Pool } = pg;
 
 const connectionString = process.env.DATABASE_URL;
 
+/**
+ * Without DATABASE_URL, `pg` quietly falls back to localhost:5432 and the failure surfaces as a
+ * confusing ECONNREFUSED against an address nobody configured. Say what is actually wrong instead.
+ */
+export function databaseConfigured() {
+  return Boolean(connectionString);
+}
+
 export const pool = new Pool({
   connectionString,
   // Render's managed Postgres terminates TLS with a certificate this container does not have a
@@ -21,6 +29,13 @@ export const pool = new Pool({
 });
 
 export async function migrate() {
+  if (!connectionString) {
+    throw new Error(
+      'DATABASE_URL is not set. Attach a Postgres database to this service: '
+      + 'create one in Render, copy its Internal Database URL, and add it as the DATABASE_URL '
+      + 'environment variable. (Deploying via render.yaml as a Blueprint wires this up for you.)',
+    );
+  }
   await pool.query(`
     CREATE TABLE IF NOT EXISTS licence_keys (
       id            SERIAL PRIMARY KEY,
