@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: astra-licensing
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      # Paste the base64 PKCS#8 Ed25519 private key here (Render dashboard, not in git).
+      - key: ASTRA_SIGNING_KEY
+        sync: false
+      # Used as a Bearer token for the admin panel. Render generates one for you.
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: astra-db
+          property: connectionString
+
+databases:
+  - name: astra-db
+    plan: free

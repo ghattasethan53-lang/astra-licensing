@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astra — Key management</title>
+<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 38 26 60 32 38 38 32 60 26 38 4 32 26 26Z' fill='%233b82f6'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#4aedd9"/><stop offset="100%" stop-color="#3b82f6"/>
+        </linearGradient></defs>
+        <path d="M32 3 38.5 25.5 61 32 38.5 38.5 32 61 25.5 38.5 3 32 25.5 25.5Z" fill="url(#g)"/>
+      </svg>
+      ASTRA
+    </div>
+    <nav><a href="/">Home</a></nav>
+  </header>
+
+  <section class="panel" id="login">
+    <h2>Admin token</h2>
+    <p style="color:var(--muted);margin-top:0;font-size:0.92rem">
+      The value of <code>ADMIN_TOKEN</code> from your Render environment. It is kept in this browser
+      tab only and sent as a Bearer token.
+    </p>
+    <div class="row">
+      <div><label for="token">Token</label><input id="token" type="password" placeholder="admin token" autocomplete="off"></div>
+      <div style="flex:0 0 auto"><button class="btn btn-primary" id="signin">Continue</button></div>
+    </div>
+    <div id="login-error" class="notice notice-warn hidden"></div>
+  </section>
+
+  <div id="console" class="hidden">
+    <section class="panel">
+      <div class="stats">
+        <div class="stat"><b id="stat-total">0</b><span>keys</span></div>
+        <div class="stat"><b id="stat-claimed">0</b><span>claimed</span></div>
+        <div class="stat"><b id="stat-revoked">0</b><span>revoked</span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Generate keys</h2>
+      <div class="row">
+        <div style="flex:0 0 120px"><label for="count">How many</label><input id="count" type="number" value="5" min="1" max="200"></div>
+        <div><label for="note">Note (optional)</label><input id="note" type="text" placeholder="e.g. batch for October"></div>
+        <div style="flex:0 0 auto"><button class="btn btn-primary" id="generate">Generate</button></div>
+      </div>
+      <div id="generated" class="hidden">
+        <div class="notice notice-warn">
+          Copy these now. Only hashes are stored, so they cannot be shown again.
+        </div>
+        <div class="keylist" id="generated-keys"></div>
+        <p><button class="btn btn-ghost" id="copy">Copy all</button></p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Keys</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Key</th><th>Status</th>
+              <th class="hide-sm">Device</th><th class="hide-sm">Claimed</th>
+              <th class="hide-sm">Note</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p id="empty" class="hidden" style="color:var(--muted)">No keys yet. Generate some above.</p>
+    </section>
+  </div>
+
+  <footer>Astra &middot; key management</footer>
+</div>
+
+<script src="/admin.js"></script>
+</body>
+</html>
