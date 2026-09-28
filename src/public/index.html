@@ -6,24 +6,16 @@
 <title>Astra — Activation</title>
 <meta name="description" content="Activation and licence management for Astra, a client-side Minecraft mod.">
 <link rel="stylesheet" href="/styles.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 38 26 60 32 38 38 32 60 26 38 4 32 26 26Z' fill='%233b82f6'/%3E%3C/svg%3E">
+<link rel="icon" href="/logo64.png">
 </head>
 <body>
 
 <div class="wrap">
   <header>
-    <div class="brand">
-      <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true">
-        <defs>
-          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#4aedd9"/>
-            <stop offset="100%" stop-color="#3b82f6"/>
-          </linearGradient>
-        </defs>
-        <path d="M32 3 38.5 25.5 61 32 38.5 38.5 32 61 25.5 38.5 3 32 25.5 25.5Z" fill="url(#g)"/>
-      </svg>
-      ASTRA
-    </div>
+    <a class="brand" href="/">
+      <img class="pixel" src="/logo64.png" width="30" height="30" alt="">
+      <span>ASTRA</span>
+    </a>
     <nav>
       <a href="#activate">Activation</a>
       <a href="#keys">Keys</a>
@@ -32,20 +24,13 @@
   </header>
 
   <section class="hero">
-    <svg width="76" height="76" viewBox="0 0 64 64" aria-hidden="true">
-      <defs>
-        <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#4aedd9"/>
-          <stop offset="55%" stop-color="#60a5fa"/>
-          <stop offset="100%" stop-color="#8b4ae8"/>
-        </linearGradient>
-      </defs>
-      <path d="M32 2 39 25 62 32 39 39 32 62 25 39 2 32 25 25Z" fill="url(#g2)"/>
-    </svg>
+    <div class="hero-mark">
+      <img class="pixel" src="/logo.png" width="112" height="112" alt="Astra">
+    </div>
     <h1>Astra</h1>
-    <p>
+    <p class="lede">
       A client-side Minecraft mod with block highlighting and the AstraTone navigation engine.
-      Activation is handled here — one key, one device, no Minecraft server involvement.
+      Activation happens in the game — one key, one device, no Minecraft server involved.
     </p>
     <div class="cta">
       <a class="btn btn-primary" href="#activate">How to activate</a>
@@ -55,56 +40,59 @@
 
   <section class="panel" id="activate">
     <h2>Activating Astra</h2>
-    <p style="color:var(--muted);margin-top:0">
-      Activation happens inside Minecraft, not on this site. The client claims your key and binds it
-      to that device, then stores a signed credential so it never asks again.
+    <p class="muted tight">
+      Activation is done inside Minecraft, not on this site. The client claims your key, binds it to
+      that device, and stores a signed credential — so it only ever asks once.
     </p>
-    <div class="grid">
-      <div class="step">
-        <div class="num">1</div>
-        <p><strong>Launch Minecraft</strong>Start the game with Astra installed. The activation screen appears automatically the first time.</p>
-      </div>
-      <div class="step">
-        <div class="num">2</div>
-        <p><strong>Enter your key</strong>Type the key you were issued. It begins with <code>AST-</code>.</p>
-      </div>
-      <div class="step">
-        <div class="num">3</div>
-        <p><strong>Astra unlocks</strong>Highlighting and AstraTone become available, and the screen never returns on that device.</p>
-      </div>
-    </div>
+    <ol class="steps">
+      <li>
+        <span class="num">1</span>
+        <div><strong>Launch Minecraft</strong><span>Start the game with Astra installed. The activation screen appears the first time you open the mod.</span></div>
+      </li>
+      <li>
+        <span class="num">2</span>
+        <div><strong>Enter your key</strong><span>Type the key you were issued. Every key begins with <code>AST-</code>.</span></div>
+      </li>
+      <li>
+        <span class="num">3</span>
+        <div><strong>Astra unlocks</strong><span>Highlighting and AstraTone become available, and the screen never returns on that device.</span></div>
+      </li>
+    </ol>
   </section>
 
   <section class="panel" id="keys">
     <h2>About your key</h2>
-    <p style="color:var(--muted);margin-top:0">Keys look like this:</p>
+    <p class="muted tight">Keys look like this:</p>
     <p><span class="key-sample">AST-AuysWUdh1-3421-GHEd</span></p>
-    <div class="grid" style="margin-top:18px">
-      <div class="step">
-        <div class="num">&#9670;</div>
-        <p><strong>One device per key</strong>A key is claimed by the first device that activates it. Copying the activation file to another computer will not work.</p>
+    <div class="cards">
+      <div class="card">
+        <h3>One device per key</h3>
+        <p>A key is claimed by the first device that activates it. Copying the activation file to another computer will not work.</p>
       </div>
-      <div class="step">
-        <div class="num">&#9670;</div>
-        <p><strong>Works offline</strong>After activation the client checks its stored credential locally, so no internet connection is needed to play.</p>
+      <div class="card">
+        <h3>Works offline</h3>
+        <p>After activation the client checks its stored credential locally, so no internet connection is needed to play.</p>
       </div>
-      <div class="step">
-        <div class="num">&#9670;</div>
-        <p><strong>New computer?</strong>Ask for a device reset and your existing key becomes claimable again.</p>
+      <div class="card">
+        <h3>New computer?</h3>
+        <p>Ask for a device reset and your existing key becomes claimable again on the new machine.</p>
       </div>
     </div>
   </section>
 
   <section class="panel">
     <h2>Server independence</h2>
-    <p style="color:var(--muted);margin:0">
-      Astra is entirely client-side. Nothing is installed on a Minecraft server, and the activation
-      belongs to your Astra client — you can play single-player, join any multiplayer server, switch
-      servers or use LAN worlds without reactivating.
+    <p class="muted tight">
+      Astra is entirely client-side. Nothing is installed on a Minecraft server, and your activation
+      belongs to the Astra client — play single-player, join any multiplayer server, switch servers or
+      use LAN worlds without reactivating.
     </p>
   </section>
 
-  <footer>Astra &middot; activation service</footer>
+  <footer>
+    <img class="pixel" src="/logo64.png" width="16" height="16" alt="">
+    Astra &middot; activation service
+  </footer>
 </div>
 
 </body>

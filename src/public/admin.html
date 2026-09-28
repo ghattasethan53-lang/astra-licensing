@@ -5,27 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Astra — Key management</title>
 <link rel="stylesheet" href="/styles.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 38 26 60 32 38 38 32 60 26 38 4 32 26 26Z' fill='%233b82f6'/%3E%3C/svg%3E">
+<link rel="icon" href="/logo64.png">
 </head>
 <body>
 
 <div class="wrap">
   <header>
-    <div class="brand">
-      <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true">
-        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#4aedd9"/><stop offset="100%" stop-color="#3b82f6"/>
-        </linearGradient></defs>
-        <path d="M32 3 38.5 25.5 61 32 38.5 38.5 32 61 25.5 38.5 3 32 25.5 25.5Z" fill="url(#g)"/>
-      </svg>
-      ASTRA
-    </div>
+    <a class="brand" href="/">
+      <img class="pixel" src="/logo64.png" width="30" height="30" alt="">
+      <span>ASTRA</span>
+    </a>
     <nav><a href="/">Home</a></nav>
   </header>
 
   <section class="panel" id="login">
     <h2>Admin token</h2>
-    <p style="color:var(--muted);margin-top:0;font-size:0.92rem">
+    <p class="muted tight" style="font-size:0.92rem">
       The value of <code>ADMIN_TOKEN</code> from your Render environment. It is kept in this browser
       tab only and sent as a Bearer token.
     </p>
@@ -75,11 +70,14 @@
           <tbody id="rows"></tbody>
         </table>
       </div>
-      <p id="empty" class="hidden" style="color:var(--muted)">No keys yet. Generate some above.</p>
+      <p id="empty" class="hidden muted">No keys yet. Generate some above.</p>
     </section>
   </div>
 
-  <footer>Astra &middot; key management</footer>
+  <footer>
+    <img class="pixel" src="/logo64.png" width="16" height="16" alt="">
+    Astra &middot; key management
+  </footer>
 </div>
 
 <script src="/admin.js"></script>
