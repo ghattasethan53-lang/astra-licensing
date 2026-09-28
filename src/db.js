@@ -121,6 +121,31 @@ export async function resetDevice(id) {
   return rows.length > 0;
 }
 
+/** Permanently removes a key. Any client holding it is locked out at its next verify. */
+export async function deleteKey(id) {
+  const { rows } = await pool.query('DELETE FROM licence_keys WHERE id = $1 RETURNING id', [id]);
+  return rows.length > 0;
+}
+
+/**
+ * Unbinds every key from its device in one statement.
+ *
+ * Keys stay valid and become claimable again; every client currently using one fails its next
+ * verify and is asked to activate afresh.
+ */
+export async function resetAllDevices() {
+  const { rowCount } = await pool.query(
+    'UPDATE licence_keys SET device_hash = NULL, claimed_at = NULL WHERE device_hash IS NOT NULL',
+  );
+  return rowCount;
+}
+
+/** Deletes every key. Unrecoverable: only hashes are stored, so nothing can be reissued. */
+export async function deleteAllKeys() {
+  const { rowCount } = await pool.query('DELETE FROM licence_keys');
+  return rowCount;
+}
+
 export async function stats() {
   const { rows } = await pool.query(`
     SELECT COUNT(*)::int AS total,

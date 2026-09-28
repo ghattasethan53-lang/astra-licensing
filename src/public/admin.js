@@ -63,6 +63,7 @@ async function refresh() {
         <button class="btn btn-ghost" data-revoke="${row.id}" data-to="${row.revoked ? 'false' : 'true'}">
           ${row.revoked ? 'Restore' : 'Revoke'}
         </button>
+        <button class="btn btn-ghost btn-danger" data-delete="${row.id}">Delete</button>
       </td>
     </tr>`).join('');
 
@@ -120,6 +121,24 @@ $('copy').addEventListener('click', async () => {
   }
 });
 
+$('reset-all').addEventListener('click', async () => {
+  if (!confirm('Unbind every key from its device?
+
+The keys survive and can be claimed again, but '
+    + 'everyone currently playing will be booted back to the main menu and asked to activate.')) return;
+  const button = $('reset-all');
+  button.disabled = true;
+  try {
+    const data = await api('/api/v1/admin/reset-all', { method: 'POST' });
+    alert(`${data.reset} key(s) unbound.`);
+    await refresh();
+  } catch (e) {
+    alert(e.message);
+  } finally {
+    button.disabled = false;
+  }
+});
+
 // Row actions are delegated, so re-rendering the table does not need listeners reattached.
 $('rows').addEventListener('click', async (event) => {
   const target = event.target.closest('button');
@@ -128,6 +147,12 @@ $('rows').addEventListener('click', async (event) => {
     if (target.dataset.reset) {
       if (!confirm('Unbind this key from its device? The customer can then activate on a new machine.')) return;
       await api(`/api/v1/admin/keys/${target.dataset.reset}/reset`, { method: 'POST' });
+    } else if (target.dataset.delete) {
+      if (!confirm('Delete this key permanently?
+
+It cannot be recovered, and whoever is using it '
+        + 'will be booted back to the main menu and asked for a new key.')) return;
+      await api(`/api/v1/admin/keys/${target.dataset.delete}/delete`, { method: 'POST' });
     } else if (target.dataset.revoke) {
       const revoked = target.dataset.to === 'true';
       if (revoked && !confirm('Revoke this key? It will stop working on the next activation.')) return;

@@ -193,6 +193,42 @@ app.post('/api/v1/admin/keys/:id/reset', requireAdmin, async (req, res) => {
   return ok ? res.json({ ok: true }) : res.status(404).json({ error: 'not_found' });
 });
 
+/** Permanently deletes a key. The holder is locked out at their next verification. */
+app.post('/api/v1/admin/keys/:id/delete', requireAdmin, async (req, res) => {
+  const ok = await db.deleteKey(Number(req.params.id));
+  return ok ? res.json({ ok: true }) : res.status(404).json({ error: 'not_found' });
+});
+
+/**
+ * Unbinds every key from its device.
+ *
+ * Every client currently running fails its next verify and is asked to activate again; the keys
+ * themselves survive and can be claimed afresh.
+ */
+app.post('/api/v1/admin/reset-all', requireAdmin, async (req, res) => {
+  try {
+    const reset = await db.resetAllDevices();
+    return res.json({ ok: true, reset });
+  } catch (error) {
+    console.error('reset-all failed', error);
+    return res.status(500).json({ error: 'server_error' });
+  }
+});
+
+/** Deletes every key. Guarded by an explicit confirmation string, because it cannot be undone. */
+app.post('/api/v1/admin/delete-all', requireAdmin, async (req, res) => {
+  if (req.body?.confirm !== 'DELETE ALL KEYS') {
+    return res.status(400).json({ error: 'not_confirmed', message: 'Confirmation phrase required.' });
+  }
+  try {
+    const deleted = await db.deleteAllKeys();
+    return res.json({ ok: true, deleted });
+  } catch (error) {
+    console.error('delete-all failed', error);
+    return res.status(500).json({ error: 'server_error' });
+  }
+});
+
 // ---------------------------------------------------------------- health
 
 app.get('/healthz', async (req, res) => {
