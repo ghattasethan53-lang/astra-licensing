@@ -122,9 +122,7 @@ $('copy').addEventListener('click', async () => {
 });
 
 $('reset-all').addEventListener('click', async () => {
-  if (!confirm('Unbind every key from its device?
-
-The keys survive and can be claimed again, but '
+  if (!confirm('Unbind every key from its device? The keys survive and can be claimed again, but '
     + 'everyone currently playing will be booted back to the main menu and asked to activate.')) return;
   const button = $('reset-all');
   button.disabled = true;
@@ -148,9 +146,7 @@ $('rows').addEventListener('click', async (event) => {
       if (!confirm('Unbind this key from its device? The customer can then activate on a new machine.')) return;
       await api(`/api/v1/admin/keys/${target.dataset.reset}/reset`, { method: 'POST' });
     } else if (target.dataset.delete) {
-      if (!confirm('Delete this key permanently?
-
-It cannot be recovered, and whoever is using it '
+      if (!confirm('Delete this key permanently? It cannot be recovered, and whoever is using it '
         + 'will be booted back to the main menu and asked for a new key.')) return;
       await api(`/api/v1/admin/keys/${target.dataset.delete}/delete`, { method: 'POST' });
     } else if (target.dataset.revoke) {
